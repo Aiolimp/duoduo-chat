@@ -1,12 +1,10 @@
 import type { LoginUser } from '@/api/auth/types';
 import { defineStore } from 'pinia';
-import { useRouter } from 'vue-router';
 
 export const useUserStore = defineStore(
   'user',
   () => {
     const token = ref<string>();
-    const router = useRouter();
     const setToken = (value: string) => {
       token.value = value;
     };
@@ -26,7 +24,8 @@ export const useUserStore = defineStore(
       // 如果需要调用接口，可以在这里调用
       clearToken();
       clearUserInfo();
-      router.replace({ name: 'chat' });
+      // 移除自动跳转，避免无限重定向
+      // router.replace({ name: 'chat' });
     };
 
     // 新增：登录弹框状态

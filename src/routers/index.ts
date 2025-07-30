@@ -54,11 +54,11 @@ router.beforeEach(
     if (ROUTER_WHITE_LIST.includes(to.path))
       return next();
 
-    // 5、判断是否有 Token，没有重定向到 login 页面。
-    if (!userStore.token)
-      userStore.logout();
-
-    // 其余逻辑 预留...
+    // 5、判断是否有 Token，没有则清除用户信息并继续访问（不强制跳转）
+    if (!userStore.token) {
+      userStore.clearToken();
+      userStore.clearUserInfo();
+    }
 
     // 6、正常访问页面。
     next();
