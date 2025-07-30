@@ -21,10 +21,10 @@ export const request = hookFetch.create<BaseResponse, 'data' | 'rows'>({
 });
 
 function jwtPlugin(): HookFetchPlugin<BaseResponse> {
-  const userStore = useUserStore();
   return {
     name: 'jwt',
     beforeRequest: async (config) => {
+      const userStore = useUserStore();
       config.headers = new Headers(config.headers);
       config.headers.set('authorization', `Bearer ${userStore.token}`);
       return config;
@@ -46,6 +46,7 @@ function jwtPlugin(): HookFetchPlugin<BaseResponse> {
       // 处理401逻辑
       if (response.result?.code === 401) {
         // 如果没有权限，退出，且弹框提示登录
+        const userStore = useUserStore();
         userStore.logout();
         userStore.openLoginDialog();
       }
