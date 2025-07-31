@@ -4,7 +4,7 @@ import type { ConversationItem } from 'vue-element-plus-x/types/Conversations';
 import type { ChatSessionVo } from '@/api/session/types';
 import { useRoute, useRouter } from 'vue-router';
 import { get_session } from '@/api';
-import logo from '@/assets/images/logo.png';
+import logo from '@/assets/images/logo.jpg';
 import SvgIcon from '@/components/SvgIcon/index.vue';
 import Collapse from '@/layouts/components/Header/components/Collapse.vue';
 import { useDesignStore } from '@/stores';

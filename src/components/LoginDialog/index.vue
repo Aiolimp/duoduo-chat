@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
-import logoPng from '@/assets/images/logo.png';
+import logoPng from '@/assets/images/logo.jpg';
 import SvgIcon from '@/components/SvgIcon/index.vue';
 import { useUserStore } from '@/stores';
 import { useLoginFormStore } from '@/stores/modules/loginForm';
@@ -61,7 +61,7 @@ function onAfterLeave() {
           <div class="left-section">
             <div class="logo-wrap">
               <img :src="logoPng" class="logo-img">
-              <span class="logo-text">Element Plus X</span>
+              <span class="logo-text">duoduo chat</span>
             </div>
             <div class="ad-banner">
               <SvgIcon name="p-bangong" class-name="animate-up-down" />
