@@ -3,36 +3,42 @@ name: Build & Deploy
 on:
   push:
     branches:
-      - main  # 或你要监控的分支
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ 拉取仓库代码
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use Node.js
+      # 2️⃣ 安装 Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 22
 
+      # 3️⃣ 安装 pnpm 并安装依赖
       - name: Install dependencies
         run: |
           npm install -g pnpm
           pnpm install
 
+      # 4️⃣ 构建项目
       - name: Build project
         run: pnpm run build
 
-      - name: Deploy to server
-        uses: appleboy/ssh-action@v0.1.6
+      # 5️⃣ 上传 dist 到服务器
+      - name: Upload dist to server
+        uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: root
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.SERVER_HOST }}       # 服务器 IP
+          username: root                         # SSH 用户
+          key: ${{ secrets.SERVER_SSH_KEY }}     # 私钥内容，记得在 GitHub Secrets 配置
           port: 22
-          source: "dist/"
-          target: "/www/wwwroot/duoduo-chat/web/"
-          rm: true
+          source: "dist/*"                       # 上传 dist 目录下的所有内容（不包括 dist 目录本身）
+          target: "/www/wwwroot/duoduo-chat/web/" # 服务器目标目录
+          strip_components: 1                    # 去掉一层目录（dist/）
+          overwrite: true                        # 覆盖已存在的文件
